@@ -1,0 +1,229 @@
+{
+  "name": "CREATE - Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1r8S3KtSxvOPwz_EpNKtp5ip6AEDciCUHsuZL4aGgY4E",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r8S3KtSxvOPwz_EpNKtp5ip6AEDciCUHsuZL4aGgY4E/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "categoria": "eletrônico",
+            "nome": "fone",
+            "id": "5",
+            "custo ": "50"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "nome",
+              "displayName": "nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "custo ",
+              "displayName": "custo ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "categoria",
+              "displayName": "categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        112,
+        -112
+      ],
+      "id": "a5f139b9-ca8b-4fb7-9fcf-1050e378c120",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleApi": {
+          "id": "18oAEk7lPEcAVVxB",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "criar-produto",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -64,
+        -112
+      ],
+      "id": "e5c12f55-fbae-42bb-8b6b-e5359aa47cba",
+      "name": "Webhook1",
+      "webhookId": "49166566-35f7-4074-a5cc-1a5acfcc5187"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        -112
+      ],
+      "id": "f329121c-393a-468b-b65e-a3d016c5951c",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        176
+      ],
+      "id": "1213f5f3-d396-4951-be73-623c8999220b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:5678/webhook/criar-produto",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "[\n  {\n    \"custo \": \"2000\",\n    \"categoria\": \"eletrônico\",\n    \"nome\": \"computador\",\n    \"id\": \"3\"\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        176,
+        176
+      ],
+      "id": "1284d41c-b2be-441c-ab2f-b4842ae3c867",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "content": "## CREATE - fluxo principal",
+        "height": 224,
+        "width": 544,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "e48ae302-66c6-4aa4-a3c5-c4a04d2435de",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Fluxo teste",
+        "height": 224,
+        "width": 400,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "0b5b2c9e-f605-4d7f-b450-19663862a5bb",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "73edc218-95a4-4b5c-8d0b-bc558c8810ff",
+  "meta": {
+    "instanceId": "17576d04a48f54985c12ebc1d2b2cfafcb6d27445b37136e1fd9c012527b9a9e"
+  },
+  "id": "IQBm6VFd7zdNkIlZ",
+  "tags": []
+}

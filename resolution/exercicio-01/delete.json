@@ -1,0 +1,176 @@
+{
+  "name": "DELETE - Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "DELETE",
+        "path": "excluir-produto",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -64,
+        -112
+      ],
+      "id": "deb620fe-0c72-467d-bf35-83d9e5f38e62",
+      "name": "Webhook1",
+      "webhookId": "a664badd-077e-45f0-b086-b1e853143f7e"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        -112
+      ],
+      "id": "b1cfde23-7f6f-416b-acbb-b273f2bbf308",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        176
+      ],
+      "id": "cfc94323-d52a-483f-b5d7-c7b8a7fd310c",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "## DELETE - fluxo principal",
+        "height": 240,
+        "width": 544,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "6c815062-dfb0-4108-ba1f-392ed4faaad3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Fluxo teste",
+        "height": 240,
+        "width": 400,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "779da720-55af-457e-b88d-3adfd0b4e9ef",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "http://localhost:5678/webhook/excluir-produto",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "[\n  {\n    \"success\": true\n  }\n]",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        176,
+        176
+      ],
+      "id": "9677e5c9-ebc3-425d-8499-b401129bd57e",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1r8S3KtSxvOPwz_EpNKtp5ip6AEDciCUHsuZL4aGgY4E",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r8S3KtSxvOPwz_EpNKtp5ip6AEDciCUHsuZL4aGgY4E/edit#gid=0"
+        },
+        "startIndex": 5
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        128,
+        -112
+      ],
+      "id": "9ecbc914-d381-4dcf-9c9f-2067a1d85ac4",
+      "name": "Delete rows or columns from sheet",
+      "credentials": {
+        "googleApi": {
+          "id": "18oAEk7lPEcAVVxB",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Delete rows or columns from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete rows or columns from sheet": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d79361aa-af6f-4f64-88a3-dddaba1a8503",
+  "meta": {
+    "instanceId": "17576d04a48f54985c12ebc1d2b2cfafcb6d27445b37136e1fd9c012527b9a9e"
+  },
+  "id": "hkmp2wERJ17OVt6t",
+  "tags": []
+}
